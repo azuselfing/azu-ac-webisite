@@ -1,19 +1,57 @@
 <!DOCTYPE html>
 <html lang="ja">
+<!-- =====================================================
+🧠 AZU Selfing Program 受講者専用マイページ
+---------------------------------------------------------
+✔ Tailwind CSSのみ（ビルド不要）
+✔ GitHub Pages公開用
+✔ 簡易パスワード認証付き
+✔ UTAGE風「講座ダッシュボード型」
+
+📌 今後の編集ポイント
+・講義追加 → 「📚 講義スライド一覧」
+・ワーク追加 → 「📝 ワークセクション」
+・音声追加 → 「🎧 音声セクション」
+・お知らせ追加 → 「📢 更新履歴」
+・色変更 → tailwind.config
+・パスワード変更 → JS最下部
+===================================================== -->
 <head>
+	<!-- =====================================================
+      ■ 基本設定
+    ===================================================== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AZU Selfing Program | マイページ</title>
+	
+	<!-- =====================================================
+      ■ フォント読み込み
+      ・Noto Sans → 本文
+      ・Shippori Mincho → 見出し
+      ・Alex Brush → 英字装飾
+    ===================================================== -->
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Shippori+Mincho:wght@400;500;600&family=Alex+Brush&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
+	<!-- =====================================================
+      ■ Tailwind CSS CDN
+      → ユーティリティCSS使用
+    ===================================================== -->
     <script src="https://cdn.tailwindcss.com"></script>
+	
+	<!-- =====================================================
+      ■ AZU専用カラー・フォント設定
+      → tailwind.config 拡張
+    ===================================================== -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+					  /* =============================
+                       🎨 ブランドカラー定義
+                    ============================= */
                     colors: {
                         azu: {
                             bg: '#F8F9FB',      // 背景
@@ -28,6 +66,9 @@
                             border: '#E5E7EB'   // 境界線
                         }
                     },
+					 /* =============================
+                       🖋 フォント定義
+                    ============================= */
                     fontFamily: {
                         sans: ['"Noto Sans JP"', 'sans-serif'],
                         serif: ['"Shippori Mincho"', 'serif'],
@@ -45,8 +86,16 @@
             }
         }
     </script>
+	 <!-- =====================================================
+      ■ カスタムCSS（細かい装飾専用）
+    ===================================================== -->
     <style>
+		 /* スムーズスクロール */
         html { scroll-behavior: smooth; }
+		
+		/* =============================
+           背景設定
+        ============================= */
         body {
             background-color: #F8F9FB;
             color: #444444;
@@ -66,7 +115,9 @@
             border-bottom: 1px solid rgba(229, 231, 235, 0.6);
         }
 
-        /* セクションブロック共通スタイル */
+        /* =============================
+           共通カードスタイル
+        ============================= */
         .section-block {
             background: #FFFFFF;
             border-radius: 20px;
@@ -142,8 +193,10 @@
 </head>
 <body class="font-sans antialiased min-h-screen flex flex-col">
 
-  <!-- パスワード追加-->
-<!-- 🔐 Password Modal -->
+  <!-- =====================================================
+🔐 パスワードモーダル（最初に必ず表示）
+👉 パスワード変更は最下部JS
+===================================================== -->
 <div id="loginModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[9999]">
 
   <div class="bg-white rounded-2xl shadow-2xl p-10 w-[90%] max-w-sm text-center space-y-6">
@@ -170,7 +223,11 @@
   </div>
 </div>
 
-    <!-- Header -->
+    <!-- =====================================================
+  🧭 ヘッダー（固定ナビ）
+  ・常に上部固定
+  ・講義 / ワーク / 音声 へジャンプ
+===================================================== -->
     <header class="glass-header fixed w-full top-0 z-50 h-16 md:h-20 flex items-center shadow-sm">
         <div class="max-w-6xl mx-auto px-4 md:px-6 w-full flex justify-between items-center">
             <!-- Logo -->
@@ -207,10 +264,16 @@
     <main class="flex-grow pt-20 md:pt-24 pb-20 px-4 md:px-8">
         <div class="max-w-5xl mx-auto">
 
-            <!-- Main Content Wrapper (No Sidebar) -->
+           <!-- =====================================================
+  📦 メインコンテンツエリア
+===================================================== -->
             <div class="w-full space-y-10">
 
-                <!-- Block 1: Main Visual (Hero Area) -->
+                <!-- =====================================================
+🌿 HERO（トップメッセージ）
+👉 文章ここ自由に変更OK
+===================================================== -->
+				<!-- Block 1: Main Visual (Hero Area) -->
                 <section class="section-block relative overflow-hidden bg-white border border-white">
                     <!-- 背景の装飾 -->
                     <div class="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-azu-pink/40 via-white to-azu-blue/40 opacity-80"></div>
@@ -259,7 +322,10 @@
                     </div>
                 </section>
 
-                <!-- Block 2: Announcements -->
+             <!-- =====================================================
+📢 お知らせ
+👉 追加したい時：この section をコピペ
+===================================================== -->
                 <section class="section-block !p-0 overflow-hidden">
                     <div class="bg-gradient-to-r from-azu-blue/40 to-azu-pink/40 p-5 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                         <div class="flex items-start gap-4">
@@ -275,7 +341,18 @@
                     </div>
                 </section>
 
-                <!-- Block 3: Lecture Slides (Compact Grid Layout) -->
+               <!-- =====================================================
+📚 講義一覧（最重要エリア）
+---------------------------------------------------------
+⭐ 講義追加方法 ⭐
+
+① 下の article をコピペ
+② STEP番号変更
+③ タイトル変更
+④ hrefにページURL
+
+👉 これだけで講義追加完了
+===================================================== -->
                 <section id="lectures" class="section-block">
                     <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 gap-4">
                         <div>
@@ -298,21 +375,46 @@
                     <!-- SP: 2列, Tablet: 3列, PC: 3~4列, Wide: 5列 -->
                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
                         
-                        <!-- Course Card 1 -->
-                        <article class="course-card group flex flex-col h-full">
+  <!-- =====================================================
+📚 講義スライド一覧エリア
+---------------------------------------------------------
+【使い方】
+① 下の「講義カードテンプレ」を丸ごとコピー
+② STEP番号 / タイトル / 説明 / リンク を変更
+③ 貼るだけで追加完了
+
+👉 HTML初心者でもここだけ触ればOK
+===================================================== -->
+                      <!-- ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+🟢 講義カードテンプレ（ここをコピーして増やす）
+★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ -->
+						<article class="course-card group flex flex-col h-full">
+							<!-- =============================
+       上部：サムネイル（色や絵文字変更OK）
+  ============================== -->
                             <div class="aspect-video w-full bg-azu-blue/40 relative overflow-hidden">
-                                <div class="absolute inset-0 flex items-center justify-center text-lg opacity-60 group-hover:scale-110 transition-transform duration-700">🌱</div>
+                                <!-- アイコン -->
+								<div class="absolute inset-0 flex items-center justify-center text-lg opacity-60 group-hover:scale-110 transition-transform duration-700">🌱</div>
+								   <!-- STEP番号（変更する） -->
                                 <div class="absolute top-2 left-2 bg-white/95 backdrop-blur-sm px-1.5 py-0.5 rounded text-[8px] font-bold text-azu-subText tracking-widest shadow-sm">STEP 1</div>
                             </div>
+							 <!-- =============================
+       下部：テキストエリア
+  ============================== -->
                             <div class="p-3 flex-1 flex flex-col justify-between">
-                                <div>
+                                <div> 
+									 <!-- ▼ タイトル変更 -->
                                     <h3 class="font-serif text-[11px] md:text-xs font-bold text-azu-text mb-1 group-hover:text-azu-accentPink transition-colors leading-tight">安心感の土台づくり</h3>
+									
+									 <!-- ▼ 説明文変更 -->
                                     <p class="text-[9px] text-azu-subText line-clamp-2 leading-relaxed mb-2">神経系を整え、不安を和らげるための基礎知識。</p>
                                 </div>
                                 <div class="flex items-center justify-between pt-2 border-t border-azu-border">
                                     <div class="flex items-center gap-1">
                                         <span class="text-[8px] text-white font-bold bg-azu-accentBlue px-1.5 py-0.5 rounded">受講中</span>
                                     </div>
+									 <!-- ▼ ボタン -->
+										 <!-- ▼ リンク変更場所-->
                                     <a href="#" class="text-[9px] text-azu-text hover:text-azu-gold transition flex items-center gap-0.5 group-hover:translate-x-1 font-medium">
                                         開く <span class="text-[8px] transition-transform">▶</span>
                                     </a>
@@ -320,73 +422,139 @@
                             </div>
                         </article>
 
-                        <!-- Course Card 2 -->
-                        <article class="course-card group flex flex-col h-full">
-                            <div class="aspect-video w-full bg-azu-pink/40 relative overflow-hidden">
+                      <!-- =====================================================
+🟡 追加例（2つ目）
+===================================================== -->
+                         <!-- ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+🟢 講義カードテンプレ（ここをコピーして増やす）
+★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ --><article class="course-card group flex flex-col h-full">
+                            <!-- =============================
+       上部：サムネイル（色や絵文字変更OK）
+  ============================== -->
+						<div class="aspect-video w-full bg-azu-pink/40 relative overflow-hidden">
+								 <!-- アイコン -->
                                 <div class="absolute inset-0 flex items-center justify-center text-lg opacity-60 group-hover:scale-110 transition-transform duration-700">💧</div>
+							 <!-- STEP番号（変更する） -->
                                 <div class="absolute top-2 left-2 bg-white/95 backdrop-blur-sm px-1.5 py-0.5 rounded text-[8px] font-bold text-azu-subText tracking-widest shadow-sm">STEP 2</div>
                             </div>
+						<!-- =============================
+       下部：テキストエリア
+  ============================== -->
                             <div class="p-3 flex-1 flex flex-col justify-between">
                                 <div>
+									 <!-- ▼ タイトル変更 -->
                                     <h3 class="font-serif text-[11px] md:text-xs font-bold text-azu-text mb-1 group-hover:text-azu-accentPink transition-colors leading-tight">感情デトックス</h3>
+									
+									 <!-- ▼ 説明文変更 -->
                                     <p class="text-[9px] text-azu-subText line-clamp-2 leading-relaxed mb-2">溜め込んだ感情を安全に解放し、本当の願いに気づく。</p>
                                 </div>
                                 <div class="flex items-center justify-between pt-2 border-t border-azu-border">
                                     <span class="text-[8px] text-azu-subText bg-azu-bg px-1.5 py-0.5 rounded border border-azu-border">未着手</span>
+									<!-- ▼ ボタン -->
+										 <!-- ▼ リンク変更場所-->
                                     <a href="#" class="text-[9px] text-azu-text hover:text-azu-gold transition flex items-center gap-0.5 group-hover:translate-x-1 font-medium">
-                                        詳細 <span class="text-[8px]">▶</span>
+                                        開く <span class="text-[8px] transition-transform">▶</span>
                                     </a>
                                 </div>
                             </div>
                         </article>
 
                         <!-- Course Card 3 -->
-                        <article class="course-card group flex flex-col h-full">
+                        <!-- ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+🟢 講義カードテンプレ（ここをコピーして増やす）
+★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ --> <article class="course-card group flex flex-col h-full">
+						<!-- =============================
+       上部：サムネイル（色や絵文字変更OK）
+  ============================== -->
                             <div class="aspect-video w-full bg-gradient-to-br from-azu-blue/30 to-azu-pink/30 relative overflow-hidden">
+								<!-- アイコン -->
                                 <div class="absolute inset-0 flex items-center justify-center text-lg opacity-60 group-hover:scale-110 transition-transform duration-700">🎀</div>
-                                <div class="absolute top-2 left-2 bg-white/95 backdrop-blur-sm px-1.5 py-0.5 rounded text-[8px] font-bold text-azu-subText tracking-widest shadow-sm">STEP 3</div>
+                                <!-- STEP番号（変更する） -->
+								<div class="absolute top-2 left-2 bg-white/95 backdrop-blur-sm px-1.5 py-0.5 rounded text-[8px] font-bold text-azu-subText tracking-widest shadow-sm">STEP 3</div>
                             </div>
+						<!-- =============================
+       下部：テキストエリア
+  ============================== -->
                             <div class="p-3 flex-1 flex flex-col justify-between">
                                 <div>
+									 <!-- ▼ タイトル変更 -->
                                     <h3 class="font-serif text-[11px] md:text-xs font-bold text-azu-text mb-1 group-hover:text-azu-accentPink transition-colors leading-tight">自分軸と境界線</h3>
+									
+									 <!-- ▼ 説明文変更 -->
                                     <p class="text-[9px] text-azu-subText line-clamp-2 leading-relaxed mb-2">他人軸を卒業し、自分を守るための優しい境界線。</p>
                                 </div>
                                 <div class="flex items-center justify-between pt-2 border-t border-azu-border">
                                     <span class="text-[8px] text-azu-subText bg-azu-bg px-1.5 py-0.5 rounded border border-azu-border">未着手</span>
-                                    <span class="text-[8px] text-azu-subText flex items-center gap-0.5 opacity-70">🔒 10/15</span>
+									<!-- ▼ ボタン -->
+										 <!-- ▼ リンク変更場所-->
+                                    <a href="#" class="text-[9px] text-azu-text hover:text-azu-gold transition flex items-center gap-0.5 group-hover:translate-x-1 font-medium">
+                                        開く <span class="text-[8px] transition-transform">▶</span>
                                 </div>
                             </div>
                         </article>
 
                         <!-- Course Card 4 -->
-                        <article class="course-card group flex flex-col h-full">
-                            <div class="aspect-video w-full bg-azu-blue/20 relative overflow-hidden">
+                         <!-- ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+🟢 講義カードテンプレ（ここをコピーして増やす）
+★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ --><article class="course-card group flex flex-col h-full">
+						<!-- =============================
+       上部：サムネイル（色や絵文字変更OK）
+  ============================== -->
+                            <div class="aspect-video w-full bg-azu-blue/20 relative overflow-hidden"> 
+								<!-- アイコン -->
                                 <div class="absolute inset-0 flex items-center justify-center text-lg opacity-60 group-hover:scale-110 transition-transform duration-700">✨</div>
-                                <div class="absolute top-2 left-2 bg-white/95 backdrop-blur-sm px-1.5 py-0.5 rounded text-[8px] font-bold text-azu-subText tracking-widest shadow-sm">STEP 4</div>
+                                <!-- STEP番号（変更する） -->
+								
+								<div class="absolute top-2 left-2 bg-white/95 backdrop-blur-sm px-1.5 py-0.5 rounded text-[8px] font-bold text-azu-subText tracking-widest shadow-sm">STEP 4</div>
                             </div>
+						<!-- =============================
+       下部：テキストエリア
+  ============================== -->
                             <div class="p-3 flex-1 flex flex-col justify-between">
                                 <div>
+									 <!-- ▼ タイトル変更 -->
                                     <h3 class="font-serif text-[11px] md:text-xs font-bold text-azu-text mb-1 group-hover:text-azu-accentPink transition-colors leading-tight">未来の再設定</h3>
+									
+									 <!-- ▼ 説明文変更 -->
                                     <p class="text-[9px] text-azu-subText line-clamp-2 leading-relaxed mb-2">新しいセルフイメージで、望む未来を描き直す。</p>
                                 </div>
                                 <div class="flex items-center justify-between pt-2 border-t border-azu-border">
-                                    <span class="text-[8px] text-azu-subText bg-azu-bg px-1.5 py-0.5 rounded border border-azu-border">未着手</span>
-                                    <span class="text-[8px] text-azu-subText flex items-center gap-0.5 opacity-70">🔒 11/01</span>
+                                    <span class="text-[8px] text-azu-subText bg-azu-bg px-1.5 py-0.5 rounded border border-azu-border"></span>
+									<!-- ▼ ボタン -->
+										 <!-- ▼ リンク変更場所-->
+                                    <a href="#" class="text-[9px] text-azu-text hover:text-azu-gold transition flex items-center gap-0.5 group-hover:translate-x-1 font-medium">
+                                        開く <span class="text-[8px] transition-transform">▶</span>
                                 </div>
                             </div>
                         </article>
 
-                        <!-- Placeholder -->
+                       <!-- =====================================================
+✨ 予備スペース（Coming Soon）
+===================================================== -->
                         <div class="border-2 border-dashed border-azu-border rounded-xl flex flex-col items-center justify-center p-4 text-azu-subText/50 hover:bg-white/50 transition h-full min-h-[140px] gap-1">
-                            <span class="text-base">✨</span>
+							
+                             <span class="text-base">✨</span>
                             <p class="text-[8px]">Coming Soon...</p>
                         </div>
                     </div>
                 </section>
 
-                <!-- Block 4: Practice Work -->
+              <!-- =====================================================
+📝 ワークセクション
+---------------------------------------------------------
+【使い方】
+
+① 下の「ワークカードテンプレ」をコピー
+② タイトル / 説明 / リンク を変更
+③ ここに貼るだけでワーク追加完了
+
+👉 講義カードと同じ仕組み
+👉 ここだけ触ればOK
+===================================================== -->
+
                 <section id="works" class="section-block">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 gap-4">
+                  <!-- セクションタイトル -->
+					<div class="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 gap-4">
                         <div>
                             <div class="flex items-center gap-2 mb-2">
                                 <span class="text-xl">📝</span>
@@ -395,42 +563,70 @@
                             <p class="text-[10px] text-azu-subText">書くことで心を整理し、変化を加速させます。</p>
                         </div>
                     </div>
-
-                    <!-- Responsive Grid -->
+<!-- =====================================================
+  🔽 ワークカードが並ぶエリア
+  ===================================================== -->
                     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4">
-                         <!-- Workbook Card (Slim) -->
+                           <!-- ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+    🟢 ワークカードテンプレ（ここをコピーして増やす）
+    -----------------------------------------------------
+    ▼ 変更する場所
+      ① タイトル
+      ② 説明文
+      ③ href（リンク先ページ）
+      ④ アイコン（任意）
+    ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ -->
                          <article class="course-card group flex flex-col xs:flex-row h-auto xs:h-28">
                             <div class="xs:w-32 bg-azu-bg relative overflow-hidden shrink-0 h-24 xs:h-auto">
+								   <!-- ========= 左：アイコンエリア ========= -->
                                 <div class="absolute inset-0 flex items-center justify-center text-3xl opacity-50 group-hover:scale-110 transition-transform duration-700">🕊️</div>
+								  <!-- ラベル（固定でOK） -->
                                 <div class="absolute top-2 left-2 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-[8px] font-bold text-azu-subText tracking-widest shadow-sm">WORKBOOK</div>
                             </div>
+							    <!-- ========= 右：テキストエリア ========= -->
                             <div class="p-3 flex-1 flex flex-col justify-between">
                                 <div>
+									 <!-- ▼ タイトル変更 -->
                                     <h3 class="font-serif text-sm font-bold text-azu-text mb-1 group-hover:text-azu-accentPink transition-colors">実践ワークシート集</h3>
+									
+									  <!-- ▼ 説明文変更 -->
                                     <p class="text-[10px] text-azu-subText line-clamp-2 leading-relaxed">日常で使える書き込み式ワークシートのダウンロードはこちら。</p>
                                 </div>
+								  <!-- ========= ボタン ========= -->
                                 <div class="flex items-center justify-between pt-1 border-t border-azu-border mt-1">
+									  <!-- ステータス表示（任意） -->
                                     <span class="text-[9px] text-azu-gold font-bold bg-azu-pink/50 px-2 py-0.5 rounded">随時更新</span>
+								   <!-- ▼ リンク変更（ここ超重要） -->
                                     <a href="#" class="text-[10px] text-azu-text hover:text-azu-gold transition flex items-center gap-1 font-medium">
                                         開く <span class="text-[8px]">▶</span>
                                     </a>
                                 </div>
                             </div>
                         </article>
-
-                        <!-- Practice Card (Slim) -->
+  <!-- =====================================================
+    ✨ 追加例（2つ目）
+    ===================================================== -->
                         <article class="course-card group flex flex-col xs:flex-row h-auto xs:h-28">
-                            <div class="xs:w-32 bg-azu-pink/20 relative overflow-hidden shrink-0 h-24 xs:h-auto">
+                              <!-- ========= 左：アイコンエリア ========= -->
+							<div class="xs:w-32 bg-azu-pink/20 relative overflow-hidden shrink-0 h-24 xs:h-auto">  
+								   <!-- ▼ アイコン変更OK -->
                                 <div class="absolute inset-0 flex items-center justify-center text-3xl opacity-50 group-hover:scale-110 transition-transform duration-700">✍️</div>
+								 <!-- ラベル（固定でOK） -->
                                 <div class="absolute top-2 left-2 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-[8px] font-bold text-azu-subText tracking-widest shadow-sm">PRACTICE</div>
                             </div>
+							  <!-- ========= 右：テキストエリア ========= -->
                             <div class="p-3 flex-1 flex flex-col justify-between">
                                 <div>
+									   <!-- ▼ タイトル変更 -->
                                     <h3 class="font-serif text-sm font-bold text-azu-text mb-1 group-hover:text-azu-accentPink transition-colors">3分間・感情ジャーナリング</h3>
+									   <!-- ▼ 説明文変更 -->
                                     <p class="text-[10px] text-azu-subText line-clamp-2 leading-relaxed">モヤモヤした時にすぐ使える、書き出しワークの実践ページ。</p>
                                 </div>
+        <!-- ========= ボタン ========= -->
                                 <div class="flex items-center justify-between pt-1 border-t border-azu-border mt-1">
+									   <!-- ステータス表示（任意） -->
                                     <span class="text-[9px] text-azu-subText bg-azu-bg px-2 py-0.5 rounded border border-azu-border">実践中</span>
+									   <!-- ▼ リンク変更（ここ超重要） -->
                                     <a href="#" class="text-[10px] text-azu-text hover:text-azu-gold transition flex items-center gap-1 font-medium">
                                         書く <span class="text-[8px]">▶</span>
                                     </a>
@@ -439,33 +635,77 @@
                         </article>
                     </div>
                 </section>
+<!-- =====================================================
+🎧 音声セクション
+---------------------------------------------------------
+【使い方】
 
-                <!-- Block 5: Audio Guide -->
+① 下の「音声カードテンプレ」をコピー
+② タイトル / 説明 / リンク(href) を変更
+③ 貼るだけで追加完了
+
+👉 音声・瞑想・誘導・BGM すべてここに追加
+👉 HTML初心者でもここだけ触ればOK
+===================================================== -->
                 <section id="audio" class="section-block">
                     <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 gap-4">
-                        <div>
+                        <div>  <!-- =====================================================
+  🔹 セクションタイトル（固定）
+  ===================================================== -->
                             <div class="flex items-center gap-2 mb-2">
                                 <span class="text-xl">🎧</span>
                                 <h2 class="font-serif text-lg md:text-xl text-azu-text font-bold">音声ガイド</h2>
                             </div>
+							   <!-- ▼ 説明文（必要なら変更OK） -->
                             <p class="text-[10px] text-azu-subText">いつでもどこでも、安心感を取り戻すための音声です。</p>
                         </div>
                     </div>
-
+                      <!-- =====================================================
+  🔽 音声カードが並ぶエリア
+  ===================================================== -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Audio Guide Card -->
+
+						
+                <!-- ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+    🟢 音声カードテンプレ（ここコピーして増やす）
+    -----------------------------------------------------
+    ▼ 変更する場所
+      ① タイトル
+      ② 説明文
+      ③ href（音声ページ or mp3リンク）
+      ④ アイコン（任意）
+    ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ -->
                         <article class="course-card group flex flex-col xs:flex-row h-auto xs:h-28">
+							 <!-- ========= 左：サムネイルエリア ========= -->
                             <div class="xs:w-32 bg-azu-blue/20 relative overflow-hidden shrink-0 h-24 xs:h-auto">
+								 <!-- ▼ アイコン変更OK（🎶 🌿 💤 など自由） -->
                                 <div class="absolute inset-0 flex items-center justify-center text-3xl opacity-50 group-hover:scale-110 transition-transform duration-700">🎶</div>
+								
+								  <!-- ラベル（基本固定でOK） -->
                                 <div class="absolute top-2 left-2 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-[8px] font-bold text-azu-subText tracking-widest shadow-sm">AUDIO</div>
                             </div>
+							
+							 <!-- ========= 右：テキストエリア ========= -->
                             <div class="p-3 flex-1 flex flex-col justify-between">
                                 <div>
+									
+									  <!-- ▼ タイトル変更 -->
                                     <h3 class="font-serif text-sm font-bold text-azu-text mb-1 group-hover:text-azu-accentPink transition-colors">安心感を育てる音声ガイド</h3>
+									
+									 <!-- ▼ 説明文変更 -->
                                     <p class="text-[10px] text-azu-subText line-clamp-2 leading-relaxed">朝の瞑想や、不安になった時に聞く誘導瞑想音声です。</p>
                                 </div>
+								  <!-- ========= ボタンエリア ========= -->
                                 <div class="flex items-center justify-between pt-1 border-t border-azu-border mt-1">
+									
+									 <!-- ステータス表示（任意） -->
                                     <span class="text-[9px] text-azu-gold font-bold bg-azu-blue/30 px-2 py-0.5 rounded">いつでも視聴可</span>
+									
+									   <!-- ▼ リンク変更（超重要） -->
+          <!-- 例：
+              audio1.html
+              audio/guide01.mp3
+              youtubeリンク などOK -->
                                     <a href="#" class="text-[10px] text-azu-text hover:text-azu-gold transition flex items-center gap-1 font-medium">
                                         再生 <span class="text-[8px]">▶</span>
                                     </a>
@@ -474,23 +714,79 @@
                         </article>
                     </div>
                 </section>
+						
+						<!-- =====================================================
+📰 更新履歴セクション
+---------------------------------------------------------
+【役割】
+・お知らせ
+・教材追加
+・音声追加
+・ワーク更新
+・日程変更 など
 
-                <!-- Block 6: Update History -->
+👉 「この講座は今も動いている」安心感を出すエリア
+👉 受講者の継続率UPにかなり効きます
+
+【使い方】
+① 下の「履歴テンプレ」をコピー
+② 日付 / 内容 / リンク を変更
+③ 上に追加するだけ（新しい順）
+
+👉 HTML初心者でもここだけ触ればOK
+===================================================== -->
+
                 <section class="section-block">
+					
+					 <!-- =====================================================
+  🔹 セクションタイトル（固定）
+  ===================================================== -->
                     <div class="flex items-center gap-2 mb-6">
                         <h2 class="font-serif text-lg text-azu-text font-bold">更新履歴</h2>
+						
+						  <!-- 横ライン装飾 -->
                         <div class="h-[1px] flex-1 bg-azu-border"></div>
                     </div>
+					
+					  <!-- =====================================================
+  🔽 履歴リストエリア
+  ===================================================== -->
                     
                     <div class="space-y-2">
+						
+						    <!-- ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+    🟢 履歴テンプレ（ここコピーして増やす）
+    -----------------------------------------------------
+    ▼ 変更する場所
+      ① 日付
+      ② 内容
+      ③ href（リンク）
+      ④ ラベル（教材 / お知らせ / 音声 / ワーク など）
+    ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ -->
                         <a href="#" class="block p-4 hover:bg-azu-bg rounded-xl transition flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 group border border-transparent hover:border-azu-border">
+							
+      <!-- ▼ 日付変更 -->
                             <span class="text-[10px] text-azu-subText bg-azu-border/50 px-2 py-1 rounded inline-block w-fit">2023.10.20</span>
+							
+      <!-- ▼ 内容変更 -->
                             <div class="flex-1">
                                 <p class="text-sm text-azu-text font-medium group-hover:text-azu-accentPink transition-colors">11月のグループセッションの日程が決まりました</p>
                             </div>
+							
+      <!-- ▼ ラベル変更 -->
                             <span class="text-[10px] text-azu-gold border border-azu-gold/30 px-2 py-0.5 rounded-full">お知らせ</span>
                         </a>
+						
+						    <!-- ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ -->
+
+
+
+    <!-- =====================================================
+    🔸 追加例（お知らせタイプ）
+    ===================================================== -->
                         <div class="h-[1px] bg-azu-border mx-2"></div>
+						
+						
                         <a href="#" class="block p-4 hover:bg-azu-bg rounded-xl transition flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 group border border-transparent hover:border-azu-border">
                             <span class="text-[10px] text-azu-subText bg-azu-border/50 px-2 py-1 rounded inline-block w-fit">2023.10.15</span>
                             <div class="flex-1">
@@ -499,7 +795,10 @@
                             <span class="text-[10px] text-azu-accentBlue border border-azu-accentBlue/30 px-2 py-0.5 rounded-full">教材</span>
                         </a>
                     </div>
-                    
+                      <!-- =====================================================
+  🔹 「すべて見る」リンク（任意）
+  ・history.html を作って一覧ページにしてもOK
+  ===================================================== -->
                     <div class="text-center mt-6">
                          <a href="#" class="text-xs text-azu-subText hover:text-azu-gold transition border-b border-azu-subText/30 hover:border-azu-gold pb-0.5">すべてのお知らせを見る</a>
                     </div>
@@ -527,12 +826,15 @@
         </div>
     </footer>
 
-  <!-- パスワード追加-->
+<!-- =====================================================
+  🔐 パスワード制御JS
+  ・correctPassword を変更すればOK
+===================================================== -->
 
 <script>
-const correctPassword = "azu123";
+const correctPassword = "azu123";/* ←パスワード変更これ */
 
-// 🔐 ページ読み込み時に必ずモーダル表示
+/* 初回読み込み時にロック */
 window.addEventListener("load", () => {
 
   const modal = document.getElementById("loginModal");
@@ -543,7 +845,7 @@ window.addEventListener("load", () => {
     modal.style.display = "flex"; // ← ★これ超重要！！
   }
 });
-
+/* パスワードチェック */
 function checkPassword(){
   const input = document.getElementById("passwordInput").value;
   const modal = document.getElementById("loginModal");
@@ -563,4 +865,4 @@ function checkPassword(){
 
 
 </body>
-</html>
+</html>コメントアウト多めに変更してください。
