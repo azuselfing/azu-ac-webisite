@@ -1,163 +1,225 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-<!-- =====================================================
-  🟣 AZU SELFING MEMBERS SITE
-  会員専用マイページ
-  ・GitHub Pages用
-  ・パスワード保護付き
-  ・Tailwind UI
-===================================================== -->
+<!-- ===================================================== -->
+<!--  AZU Selfing Program  会員サイト                      -->
+<!--  編集メモ                                             -->
+<!--  ・テキスト変更 → 各section内                         -->
+<!--  ・色変更 → tailwind.config colors                     -->
+<!--  ・構造は基本触らない（崩れ防止）                      -->
+<!-- ===================================================== -->
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AZU Selfing Program | マイページ</title>
 
-  <!-- =============================
-    Google Fonts
-  ============================== -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Shippori+Mincho&family=Alex+Brush&display=swap" rel="stylesheet">
+    <!-- ===== 基本設定 ===== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- =============================
-    Tailwind CDN
-  ============================== -->
-  <script src="https://cdn.tailwindcss.com"></script>
+    <!-- ===== タイトル（ブラウザタブ表示名）===== -->
+    <title>AZU Selfing Program | マイページ</title>
 
-  <!-- =============================
-    🎨 AZUカラーテーマ設定
-    👉 色変更はここだけ触ればOK
-  ============================== -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            azu: {
-              bg: '#F8F9FB',
-              surface: '#FFFFFF',
-              pink: '#FADCE6',
-              blue: '#DFF0F6',
-              accentPink: '#DFA6B9',
-              accentBlue: '#9DC2D9',
-              text: '#444444',
-              subText: '#777777',
-              border: '#E5E7EB'
+
+
+    <!-- ===================================================== -->
+    <!-- Google Fonts 読み込み                                  -->
+    <!-- フォント変更はここを差し替える                          -->
+    <!-- ===================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Shippori+Mincho:wght@400;500;600&family=Alex+Brush&display=swap" rel="stylesheet">
+
+
+
+    <!-- ===================================================== -->
+    <!-- Tailwind CSS（レイアウトの心臓部）                      -->
+    <!-- 消すと全部崩れます⚠️                                   -->
+    <!-- ===================================================== -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+
+    <!-- ===================================================== -->
+    <!-- 🎨 AZUブランドカラー設定                                 -->
+    <!-- ここを書き換えるだけで全体色変更可能                    -->
+    <!-- ===================================================== -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        azu: {
+                            bg: '#F8F9FB',
+                            surface: '#FFFFFF',
+                            pink: '#FADCE6',
+                            blue: '#DFF0F6',
+                            accentPink: '#DFA6B9',
+                            accentBlue: '#9DC2D9',
+                            text: '#444444',
+                            subText: '#777777',
+                            gold: '#B89679',
+                            border: '#E5E7EB'
+                        }
+                    }
+                }
             }
-          }
         }
-      }
-    }
-  </script>
+    </script>
 
-  <!-- =============================
-    共通スタイル
-  ============================== -->
-  <style>
-    body {
-      background:#F8F9FB;
-      font-family:"Noto Sans JP", sans-serif;
-      letter-spacing:.05em;
-    }
-  </style>
+
+
+    <!-- ===================================================== -->
+    <!-- 🎨 細かいカスタムCSS（共通デザイン）                     -->
+    <!-- 基本触らなくてOK                                      -->
+    <!-- ===================================================== -->
+    <style>
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: #F8F9FB;
+            color: #444444;
+            letter-spacing: 0.05em;
+            line-height: 1.8;
+        }
+
+        /* ===== 共通カードデザイン ===== */
+        .section-block {
+            background: #FFFFFF;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+    </style>
+
 </head>
 
 
 
-<!-- =====================================================
-  🟣 BODY START
-===================================================== -->
-<body class="min-h-screen flex flex-col">
+<!-- ===================================================== -->
+<!-- BODY開始                                               -->
+<!-- ===================================================== -->
+<body class="font-sans antialiased min-h-screen flex flex-col">
 
 
 
-<!-- =====================================================
-  🔐 パスワードモーダル（会員専用ロック）
-  ・最初に必ず表示
-  ・正解で中身が見える
-  👉 デザイン変更ここ
-===================================================== -->
-<div id="loginModal"
-  class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[9999]">
+<!-- ===================================================== -->
+<!-- 🔐 パスワードモーダル（ログイン画面）                    -->
+<!-- ここを削除すると誰でも閲覧可能になる                     -->
+<!-- ===================================================== -->
+<div id="loginModal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-[9999]">
 
-  <div class="bg-white rounded-2xl p-10 w-[90%] max-w-sm text-center space-y-6">
+  <div class="bg-white rounded-2xl shadow-2xl p-10 w-[90%] max-w-sm text-center space-y-6">
 
-    <h2 class="text-lg font-bold">会員専用ページ</h2>
+    <!-- タイトル -->
+    <h2 class="font-serif text-xl">会員専用ページ</h2>
 
-    <input
-      type="password"
-      id="passwordInput"
-      placeholder="Password"
-      class="w-full border rounded-full px-4 py-2">
+    <!-- 説明 -->
+    <p class="text-xs">パスワードを入力してください</p>
 
-    <button
-      onclick="checkPassword()"
-      class="w-full bg-azu-pink py-2 rounded-full">
+    <!-- 入力欄 -->
+    <input type="password" id="passwordInput" placeholder="Password" class="w-full border rounded-full px-4 py-2">
+
+    <!-- ボタン -->
+    <button onclick="checkPassword()" class="w-full bg-azu-pink text-white py-2 rounded-full">
       入室する
     </button>
 
-    <p id="errorMsg" class="text-red-400 text-xs hidden">
-      パスワードが違います
-    </p>
+    <!-- エラー表示 -->
+    <p id="errorMsg" class="text-xs text-red-400 hidden">パスワードが違います</p>
 
   </div>
 </div>
 
 
 
+<!-- ===================================================== -->
+<!-- 🟣 HEADER（上部ナビゲーション）                         -->
+<!-- ロゴ・メニュー                                        -->
+<!-- ===================================================== -->
+<header class="h-16 flex items-center bg-white shadow-sm">
 
-<!-- =====================================================
-  🟣 ヘッダー
-  👉 ロゴ・ナビ変更ここ
-===================================================== -->
-<header class="bg-white shadow p-4">
-  <h1 class="text-center font-bold">AC.AZU.SELFING Members</h1>
+    <div class="max-w-6xl mx-auto w-full flex justify-between px-4">
+
+        <!-- ロゴ -->
+        <h1 class="font-serif">AZU SELFING</h1>
+
+        <!-- ナビ -->
+        <nav class="flex gap-4 text-sm">
+            <a href="#lectures">講義</a>
+            <a href="#works">ワーク</a>
+            <a href="#audio">音声</a>
+        </nav>
+
+    </div>
+
 </header>
 
 
 
-
-<!-- =====================================================
-  🟣 メインコンテンツ
-===================================================== -->
-<main class="flex-1 p-6 space-y-10 max-w-5xl mx-auto">
-
+<!-- ===================================================== -->
+<!-- 🟣 MAIN（メインコンテンツ）                             -->
+<!-- ===================================================== -->
+<main class="flex-grow pt-10 px-4">
 
 
-  <!-- =====================================================
-    🌸 ヒーロー（最初の挨拶エリア）
-    👉 テキスト変更ここ
-  ===================================================== -->
-  <section class="bg-white rounded-xl p-10 text-center shadow">
-    <h2 class="text-xl font-bold mb-3">講座コンテンツサイト</h2>
-    <p class="text-sm text-gray-600">
-      あなた専用の学習スペースです。
-講義・ワーク・音声を通して、
-安心感と自分軸を、少しずつ育てていきましょう。
+
+<!-- ===================================================== -->
+<!-- 🌿 HEROセクション（トップメッセージ）                   -->
+<!-- ここが一番文章編集する場所                              -->
+<!-- ===================================================== -->
+<section class="section-block text-center">
+
+    <h2 class="text-xl font-serif mb-4">
+        Selfing Program Member Page
+    </h2>
+
+    <p class="text-sm mb-6">
+        あなた専用の学習スペースです。<br>
+        講義・ワーク・音声を通して、安心感と自分軸を育てていきましょう。
     </p>
-  </section>
+
+    <button class="bg-azu-pink px-6 py-2 rounded-full">
+        学習を再開する
+    </button>
+
+</section>
 
 
 
-  <!-- =====================================================
-    📚 講義一覧
-    👉 講義カード増やすだけでOK
-  ===================================================== -->
-  <section>
+<!-- ===================================================== -->
+<!-- 📚 講義セクション                                      -->
+<!-- ===================================================== -->
+<section id="lectures" class="section-block">
+
     <h3 class="font-bold mb-4">講義スライド</h3>
+    <p class="text-sm">ステップ順に進める学習プログラムです。</p>
 
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+</section>
 
-      <!-- ▼ 1講義カード -->
-      <a href="#" class="bg-white p-6 rounded-xl shadow text-center hover:bg-azu-pink">
-        STEP1<br>安心感の土台
-      </a>
 
-      <!-- 追加したい時は ↑ をコピペ -->
 
-    </div>
-  </section>
+<!-- ===================================================== -->
+<!-- 📝 ワークセクション                                     -->
+<!-- ===================================================== -->
+<section id="works" class="section-block">
+
+    <h3 class="font-bold mb-4">実践ワーク</h3>
+    <p class="text-sm">アウトプットで理解を定着させます。</p>
+
+</section>
+
+
+
+<!-- ===================================================== -->
+<!-- 🎧 音声セクション                                      -->
+<!-- ===================================================== -->
+<section id="audio" class="section-block">
+
+    <h3 class="font-bold mb-4">音声ガイド</h3>
+    <p class="text-sm">日常で心を整えるセルフケア音声。</p>
+
+</section>
 
 
 
@@ -165,51 +227,38 @@
 
 
 
-
-<!-- =====================================================
-  🟣 フッター
-===================================================== -->
-<footer class="text-center text-xs py-6 text-gray-400">
-  © AZU SELFING
-</footer>
-
-
-
-
-<!-- =====================================================
-  🔐 パスワード制御スクリプト
-  👉 パスワード変更はここだけ
-===================================================== -->
+<!-- ===================================================== -->
+<!-- 🔐 パスワードJS                                         -->
+<!-- セキュリティロジック                                   -->
+<!-- ===================================================== -->
 <script>
 
-  // ★ パスワードここ変更
-  const correctPassword = "azu123";
+const correctPassword = "azu123";
 
-  // 初回ロード処理
-  window.addEventListener("load", () => {
-    const modal = document.getElementById("loginModal");
+/* ページ読み込み時チェック */
+window.addEventListener("load", () => {
 
-    // ログイン済みなら非表示
-    if (sessionStorage.getItem("azu_login") === "true") {
-      modal.style.display = "none";
-    } else {
-      modal.style.display = "flex";
-    }
-  });
+  const modal = document.getElementById("loginModal");
 
-  // パスワードチェック
-  function checkPassword() {
-    const input = document.getElementById("passwordInput").value;
-    const modal = document.getElementById("loginModal");
-    const error = document.getElementById("errorMsg");
-
-    if (input === correctPassword) {
-      sessionStorage.setItem("azu_login", "true");
-      modal.style.display = "none";
-    } else {
-      error.classList.remove("hidden");
-    }
+  if(sessionStorage.getItem("azu_login") === "true"){
+    modal.style.display = "none";
+  } else {
+    modal.style.display = "flex";
   }
+});
+
+/* パスワード判定 */
+function checkPassword(){
+
+  const input = document.getElementById("passwordInput").value;
+
+  if(input === correctPassword){
+    sessionStorage.setItem("azu_login","true");
+    document.getElementById("loginModal").style.display = "none";
+  } else {
+    document.getElementById("errorMsg").classList.remove("hidden");
+  }
+}
 
 </script>
 
