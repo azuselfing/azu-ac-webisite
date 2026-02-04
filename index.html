@@ -1,565 +1,216 @@
 <!DOCTYPE html>
 <html lang="ja">
+
+<!-- =====================================================
+  🟣 AZU SELFING MEMBERS SITE
+  会員専用マイページ
+  ・GitHub Pages用
+  ・パスワード保護付き
+  ・Tailwind UI
+===================================================== -->
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AZU Selfing Program | マイページ</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Shippori+Mincho:wght@400;500;600&family=Alex+Brush&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        azu: {
-                            bg: '#F8F9FB',      // 背景
-                            surface: '#FFFFFF', // カード背景
-                            pink: '#FADCE6',    // ピンク
-                            blue: '#DFF0F6',    // ブルー
-                            accentPink: '#DFA6B9', // アクセントピンク
-                            accentBlue: '#9DC2D9', // アクセントブルー
-                            text: '#444444',    // テキスト
-                            subText: '#777777', // サブテキスト
-                            gold: '#B89679',    // ゴールド
-                            border: '#E5E7EB'   // 境界線
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['"Noto Sans JP"', 'sans-serif'],
-                        serif: ['"Shippori Mincho"', 'serif'],
-                        script: ['"Alex Brush"', 'cursive'],
-                    },
-                    boxShadow: {
-                        'card': '0 4px 20px rgba(0, 0, 0, 0.04)',
-                        'card-hover': '0 10px 30px rgba(200, 180, 190, 0.2)',
-                        'section': '0 8px 30px rgba(0, 0, 0, 0.03)',
-                    },
-                    screens: {
-                        'xs': '480px', // スマホ横向きや大きめスマホ用
-                    }
-                }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AZU Selfing Program | マイページ</title>
+
+  <!-- =============================
+    Google Fonts
+  ============================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Shippori+Mincho&family=Alex+Brush&display=swap" rel="stylesheet">
+
+  <!-- =============================
+    Tailwind CDN
+  ============================== -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- =============================
+    🎨 AZUカラーテーマ設定
+    👉 色変更はここだけ触ればOK
+  ============================== -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            azu: {
+              bg: '#F8F9FB',
+              surface: '#FFFFFF',
+              pink: '#FADCE6',
+              blue: '#DFF0F6',
+              accentPink: '#DFA6B9',
+              accentBlue: '#9DC2D9',
+              text: '#444444',
+              subText: '#777777',
+              border: '#E5E7EB'
             }
+          }
         }
-    </script>
-    <style>
-        html { scroll-behavior: smooth; }
-        body {
-            background-color: #F8F9FB;
-            color: #444444;
-            letter-spacing: 0.05em;
-            line-height: 1.8;
-            /* 背景グラデーション */
-            background-image: 
-                radial-gradient(circle at 0% 0%, rgba(250, 220, 230, 0.6) 0%, transparent 45%),
-                radial-gradient(circle at 100% 0%, rgba(223, 240, 246, 0.6) 0%, transparent 45%);
-            background-attachment: fixed;
-        }
+      }
+    }
+  </script>
 
-        /* 共通ヘッダー */
-        .glass-header {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(229, 231, 235, 0.6);
-        }
-
-        /* セクションブロック共通スタイル */
-        .section-block {
-            background: #FFFFFF;
-            border-radius: 20px;
-            padding: 24px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(243, 244, 246, 1);
-            margin-bottom: 32px;
-        }
-        @media (min-width: 768px) {
-            .section-block {
-                border-radius: 24px;
-                padding: 32px;
-                margin-bottom: 40px;
-            }
-        }
-        @media (min-width: 1024px) {
-            .section-block {
-                padding: 48px;
-            }
-        }
-
-        /* カードスタイル（リストアイテム用） */
-        .course-card {
-            background: #FAFAFA;
-            border: 1px solid #EEEEEE;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .course-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(223, 166, 185, 0.15);
-            border-color: #FADCE6;
-            background: #FFFFFF;
-        }
-
-        /* カテゴリタブ */
-        .tab-btn {
-            position: relative;
-            transition: color 0.3s;
-            padding-bottom: 4px;
-            white-space: nowrap;
-        }
-        .tab-btn::after {
-            content: '';
-            position: absolute;
-            bottom: 0px;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: #DFA6B9;
-            transition: width 0.3s;
-        }
-        .tab-btn.active::after {
-            width: 100%;
-        }
-        .tab-btn.active {
-            color: #444444;
-            font-weight: 600;
-        }
-
-        /* メインビジュアルのアニメーション */
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(3deg); }
-            50% { transform: translateY(-10px) rotate(4deg); }
-            100% { transform: translateY(0px) rotate(3deg); }
-        }
-        .floating-photo {
-            animation: float 6s ease-in-out infinite;
-        }
-    </style>
+  <!-- =============================
+    共通スタイル
+  ============================== -->
+  <style>
+    body {
+      background:#F8F9FB;
+      font-family:"Noto Sans JP", sans-serif;
+      letter-spacing:.05em;
+    }
+  </style>
 </head>
-<body class="font-sans antialiased min-h-screen flex flex-col">
 
-  <!-- パスワード追加-->
-<!-- 🔐 Password Modal -->
-<div id="loginModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[9999]">
 
-  <div class="bg-white rounded-2xl shadow-2xl p-10 w-[90%] max-w-sm text-center space-y-6">
 
-    <h2 class="font-serif text-xl text-azu-text">会員専用ページ</h2>
-    <p class="text-xs text-azu-subText">パスワードを入力してください</p>
+<!-- =====================================================
+  🟣 BODY START
+===================================================== -->
+<body class="min-h-screen flex flex-col">
+
+
+
+<!-- =====================================================
+  🔐 パスワードモーダル（会員専用ロック）
+  ・最初に必ず表示
+  ・正解で中身が見える
+  👉 デザイン変更ここ
+===================================================== -->
+<div id="loginModal"
+  class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[9999]">
+
+  <div class="bg-white rounded-2xl p-10 w-[90%] max-w-sm text-center space-y-6">
+
+    <h2 class="text-lg font-bold">会員専用ページ</h2>
 
     <input
       type="password"
       id="passwordInput"
       placeholder="Password"
-      class="w-full border border-azu-border rounded-full px-4 py-2 text-sm focus:outline-none focus:border-azu-accentPink"
-    >
+      class="w-full border rounded-full px-4 py-2">
 
     <button
       onclick="checkPassword()"
-      class="w-full bg-azu-pink hover:bg-azu-accentPink text-white text-xs tracking-widest font-bold py-2 rounded-full transition"
-    >
+      class="w-full bg-azu-pink py-2 rounded-full">
       入室する
     </button>
 
-    <p id="errorMsg" class="text-[10px] text-red-400 hidden">パスワードが違います</p>
+    <p id="errorMsg" class="text-red-400 text-xs hidden">
+      パスワードが違います
+    </p>
 
   </div>
 </div>
 
-    <!-- Header -->
-    <header class="glass-header fixed w-full top-0 z-50 h-16 md:h-20 flex items-center shadow-sm">
-        <div class="max-w-6xl mx-auto px-4 md:px-6 w-full flex justify-between items-center">
-            <!-- Logo -->
-            <div class="flex items-center gap-3">
-                <img src="image_fef63c.jpg" alt="Logo" class="h-8 w-8 md:h-9 md:w-9 rounded-full border border-gray-100 shadow-sm">
-                <div class="flex flex-col">
-                    <span class="font-serif text-xs md:text-sm tracking-[0.1em] text-azu-text font-medium uppercase">AZU SELFING</span>
-                    <span class="text-[8px] md:text-[9px] text-azu-gold tracking-widest font-bold">MEMBERSHIP</span>
-                </div>
-            </div>
 
-            <!-- Navigation (Desktop & Tablet) -->
-            <nav class="hidden md:flex items-center gap-6 lg:gap-8 text-xs tracking-widest text-azu-subText font-medium">
-                <a href="#" class="text-azu-text font-bold border-b-2 border-azu-gold pb-1">ホーム</a>
-                <a href="#lectures" class="hover:text-azu-text transition-colors">講義</a>
-                <a href="#works" class="hover:text-azu-text transition-colors">ワーク</a>
-                <a href="#audio" class="hover:text-azu-text transition-colors">音声</a>
-            </nav>
 
-            <!-- User Menu -->
-            <div class="flex items-center gap-3 md:gap-4">
-                <a href="#" class="hidden md:flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white rounded-full border border-azu-border hover:bg-azu-pink hover:border-azu-accentPink transition shadow-sm group">
-                    <div class="w-5 h-5 md:w-6 md:h-6 rounded-full bg-azu-pink group-hover:bg-white flex items-center justify-center text-[10px] transition-colors">👩‍🦰</div>
-                    <span class="text-[10px] md:text-xs text-azu-text font-medium">マイページ</span>
-                </a>
-                <!-- Mobile Hamburger (Icon Only) -->
-                <button class="md:hidden p-2 text-azu-text">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-width="2" stroke-linecap="round"/></svg>
-                </button>
-            </div>
-        </div>
-    </header>
 
-    <main class="flex-grow pt-20 md:pt-24 pb-20 px-4 md:px-8">
-        <div class="max-w-5xl mx-auto">
+<!-- =====================================================
+  🟣 ヘッダー
+  👉 ロゴ・ナビ変更ここ
+===================================================== -->
+<header class="bg-white shadow p-4">
+  <h1 class="text-center font-bold">AZU SELFING MEMBERS</h1>
+</header>
 
-            <!-- Main Content Wrapper (No Sidebar) -->
-            <div class="w-full space-y-10">
 
-                <!-- Block 1: Main Visual (Hero Area) -->
-                <section class="section-block relative overflow-hidden bg-white border border-white">
-                    <!-- 背景の装飾 -->
-                    <div class="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-azu-pink/40 via-white to-azu-blue/40 opacity-80"></div>
-                    <div class="absolute -top-20 -right-20 w-96 h-96 bg-azu-accentPink/20 rounded-full blur-3xl"></div>
-                    <div class="absolute bottom-0 left-0 w-64 h-64 bg-azu-accentBlue/20 rounded-full blur-3xl"></div>
-                    
-                    <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 lg:gap-16">
-                        <!-- メッセージエリア -->
-                        <div class="flex-1 text-center md:text-left space-y-4 md:space-y-5">
-                            <p class="font-script text-2xl md:text-3xl text-azu-gold">Welcome back, dear.</p>
-                            <h1 class="font-serif text-xl md:text-2xl lg:text-3xl text-azu-text leading-relaxed font-medium">
-                                おかえりなさい。<br>
-                                今日はどんな気持ちですか？
-                            </h1>
-                            <div class="w-12 h-[2px] bg-azu-gold/40 mx-auto md:mx-0"></div>
-                            <p class="text-xs md:text-sm text-azu-text/80 leading-loose">
-                                無理に変わろうとしなくて大丈夫。<br>
-                                ここは、あなたが「あなた」に戻る場所。<br>
-                                焦らず、深呼吸してから始めましょう。
-                            </p>
-                            <div class="pt-2">
-                                <a href="#" class="inline-flex items-center gap-3 px-6 py-2.5 md:px-8 md:py-3 bg-white hover:bg-azu-pink text-azu-text text-xs tracking-widest font-bold rounded-full shadow-sm hover:shadow-md transition border border-azu-border hover:border-azu-accentPink group">
-                                    <span class="w-5 h-5 md:w-6 md:h-6 rounded-full bg-azu-pink group-hover:bg-white flex items-center justify-center text-[10px] text-azu-gold transition-colors">📖</span>
-                                    前回のスライドから
-                                </a>
-                            </div>
-                        </div>
 
-                        <!-- ビジュアルエリア（ポラロイド風） -->
-                        <div class="relative w-48 md:w-56 lg:w-64 shrink-0 hidden sm:block">
-                            <!-- 写真1 -->
-                            <div class="absolute top-0 right-0 w-40 md:w-48 p-2.5 bg-white shadow-lg rotate-3 rounded-sm border border-gray-100 floating-photo z-10">
-                                <div class="w-full aspect-[4/5] bg-azu-blue/30 flex items-center justify-center relative overflow-hidden">
-                                    <div class="absolute inset-0 bg-gradient-to-tr from-azu-pink/30 to-transparent"></div>
-                                    <span class="text-4xl opacity-60 grayscale-[0.2]">🕊️</span>
-                                </div>
-                                <div class="pt-3 pb-1 text-center">
-                                    <p class="font-script text-lg text-azu-text/40">Your pace</p>
-                                </div>
-                            </div>
-                            <!-- 写真2（背面） -->
-                            <div class="absolute top-6 md:top-8 right-6 md:right-8 w-32 md:w-40 p-2 bg-white/90 shadow-md -rotate-6 rounded-sm border border-gray-100 z-0">
-                                <div class="w-full aspect-square bg-azu-pink/20"></div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
 
-                <!-- Block 2: Announcements -->
-                <section class="section-block !p-0 overflow-hidden">
-                    <div class="bg-gradient-to-r from-azu-blue/40 to-azu-pink/40 p-5 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                        <div class="flex items-start gap-4">
-                            <span class="shrink-0 inline-block px-2.5 py-1 bg-white text-[9px] md:text-[10px] font-bold text-azu-gold rounded-full mt-0.5 shadow-sm">NEW</span>
-                            <div>
-                                <h2 class="font-serif text-sm md:text-base text-azu-text mb-1 font-bold">新しい補足スライド「境界線の引き方 実践ガイド」</h2>
-                                <p class="text-xs text-azu-text/80">第3章の補足として、図解でわかりやすい解説資料を追加しました。</p>
-                            </div>
-                        </div>
-                        <a href="#" class="shrink-0 text-xs text-azu-text hover:text-azu-gold transition font-bold bg-white/90 px-5 py-2.5 rounded-full shadow-sm hover:shadow-md self-start md:self-center">
-                            資料を読む &rarr;
-                        </a>
-                    </div>
-                </section>
+<!-- =====================================================
+  🟣 メインコンテンツ
+===================================================== -->
+<main class="flex-1 p-6 space-y-10 max-w-5xl mx-auto">
 
-                <!-- Block 3: Lecture Slides (Compact Grid Layout) -->
-                <section id="lectures" class="section-block">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 gap-4">
-                        <div>
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="text-xl">📚</span>
-                                <h2 class="font-serif text-lg md:text-xl text-azu-text font-bold">講義スライド</h2>
-                            </div>
-                            <p class="text-[10px] text-azu-subText">自分のペースで、少しずつ進めていきましょう。</p>
-                        </div>
-                        <!-- タブ（スマホ時は横スクロール） -->
-                        <div class="flex items-center gap-4 md:gap-6 text-xs text-azu-subText overflow-x-auto pb-1 md:pb-0 w-full md:w-auto -mx-4 px-4 md:mx-0 md:px-0 scrollbar-hide">
-                            <button class="tab-btn active shrink-0">すべて</button>
-                            <button class="tab-btn hover:text-azu-text shrink-0">基礎講座</button>
-                            <button class="tab-btn hover:text-azu-text shrink-0">実践編</button>
-                            <button class="tab-btn hover:text-azu-text shrink-0">QA</button>
-                        </div>
-                    </div>
 
-                    <!-- Compact Grid: Responsive Columns -->
-                    <!-- SP: 2列, Tablet: 3列, PC: 3~4列, Wide: 5列 -->
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
-                        
-                        <!-- Course Card 1 -->
-                        <article class="course-card group flex flex-col h-full">
-                            <div class="aspect-video w-full bg-azu-blue/40 relative overflow-hidden">
-                                <div class="absolute inset-0 flex items-center justify-center text-lg opacity-60 group-hover:scale-110 transition-transform duration-700">🌱</div>
-                                <div class="absolute top-2 left-2 bg-white/95 backdrop-blur-sm px-1.5 py-0.5 rounded text-[8px] font-bold text-azu-subText tracking-widest shadow-sm">STEP 1</div>
-                            </div>
-                            <div class="p-3 flex-1 flex flex-col justify-between">
-                                <div>
-                                    <h3 class="font-serif text-[11px] md:text-xs font-bold text-azu-text mb-1 group-hover:text-azu-accentPink transition-colors leading-tight">安心感の土台づくり</h3>
-                                    <p class="text-[9px] text-azu-subText line-clamp-2 leading-relaxed mb-2">神経系を整え、不安を和らげるための基礎知識。</p>
-                                </div>
-                                <div class="flex items-center justify-between pt-2 border-t border-azu-border">
-                                    <div class="flex items-center gap-1">
-                                        <span class="text-[8px] text-white font-bold bg-azu-accentBlue px-1.5 py-0.5 rounded">受講中</span>
-                                    </div>
-                                    <a href="#" class="text-[9px] text-azu-text hover:text-azu-gold transition flex items-center gap-0.5 group-hover:translate-x-1 font-medium">
-                                        開く <span class="text-[8px] transition-transform">▶</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </article>
 
-                        <!-- Course Card 2 -->
-                        <article class="course-card group flex flex-col h-full">
-                            <div class="aspect-video w-full bg-azu-pink/40 relative overflow-hidden">
-                                <div class="absolute inset-0 flex items-center justify-center text-lg opacity-60 group-hover:scale-110 transition-transform duration-700">💧</div>
-                                <div class="absolute top-2 left-2 bg-white/95 backdrop-blur-sm px-1.5 py-0.5 rounded text-[8px] font-bold text-azu-subText tracking-widest shadow-sm">STEP 2</div>
-                            </div>
-                            <div class="p-3 flex-1 flex flex-col justify-between">
-                                <div>
-                                    <h3 class="font-serif text-[11px] md:text-xs font-bold text-azu-text mb-1 group-hover:text-azu-accentPink transition-colors leading-tight">感情デトックス</h3>
-                                    <p class="text-[9px] text-azu-subText line-clamp-2 leading-relaxed mb-2">溜め込んだ感情を安全に解放し、本当の願いに気づく。</p>
-                                </div>
-                                <div class="flex items-center justify-between pt-2 border-t border-azu-border">
-                                    <span class="text-[8px] text-azu-subText bg-azu-bg px-1.5 py-0.5 rounded border border-azu-border">未着手</span>
-                                    <a href="#" class="text-[9px] text-azu-text hover:text-azu-gold transition flex items-center gap-0.5 group-hover:translate-x-1 font-medium">
-                                        詳細 <span class="text-[8px]">▶</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </article>
+  <!-- =====================================================
+    🌸 ヒーロー（最初の挨拶エリア）
+    👉 テキスト変更ここ
+  ===================================================== -->
+  <section class="bg-white rounded-xl p-10 text-center shadow">
+    <h2 class="text-xl font-bold mb-3">おかえりなさい</h2>
+    <p class="text-sm text-gray-600">
+      ここはあなたが「あなた」に戻る場所。
+    </p>
+  </section>
 
-                        <!-- Course Card 3 -->
-                        <article class="course-card group flex flex-col h-full">
-                            <div class="aspect-video w-full bg-gradient-to-br from-azu-blue/30 to-azu-pink/30 relative overflow-hidden">
-                                <div class="absolute inset-0 flex items-center justify-center text-lg opacity-60 group-hover:scale-110 transition-transform duration-700">🎀</div>
-                                <div class="absolute top-2 left-2 bg-white/95 backdrop-blur-sm px-1.5 py-0.5 rounded text-[8px] font-bold text-azu-subText tracking-widest shadow-sm">STEP 3</div>
-                            </div>
-                            <div class="p-3 flex-1 flex flex-col justify-between">
-                                <div>
-                                    <h3 class="font-serif text-[11px] md:text-xs font-bold text-azu-text mb-1 group-hover:text-azu-accentPink transition-colors leading-tight">自分軸と境界線</h3>
-                                    <p class="text-[9px] text-azu-subText line-clamp-2 leading-relaxed mb-2">他人軸を卒業し、自分を守るための優しい境界線。</p>
-                                </div>
-                                <div class="flex items-center justify-between pt-2 border-t border-azu-border">
-                                    <span class="text-[8px] text-azu-subText bg-azu-bg px-1.5 py-0.5 rounded border border-azu-border">未着手</span>
-                                    <span class="text-[8px] text-azu-subText flex items-center gap-0.5 opacity-70">🔒 10/15</span>
-                                </div>
-                            </div>
-                        </article>
 
-                        <!-- Course Card 4 -->
-                        <article class="course-card group flex flex-col h-full">
-                            <div class="aspect-video w-full bg-azu-blue/20 relative overflow-hidden">
-                                <div class="absolute inset-0 flex items-center justify-center text-lg opacity-60 group-hover:scale-110 transition-transform duration-700">✨</div>
-                                <div class="absolute top-2 left-2 bg-white/95 backdrop-blur-sm px-1.5 py-0.5 rounded text-[8px] font-bold text-azu-subText tracking-widest shadow-sm">STEP 4</div>
-                            </div>
-                            <div class="p-3 flex-1 flex flex-col justify-between">
-                                <div>
-                                    <h3 class="font-serif text-[11px] md:text-xs font-bold text-azu-text mb-1 group-hover:text-azu-accentPink transition-colors leading-tight">未来の再設定</h3>
-                                    <p class="text-[9px] text-azu-subText line-clamp-2 leading-relaxed mb-2">新しいセルフイメージで、望む未来を描き直す。</p>
-                                </div>
-                                <div class="flex items-center justify-between pt-2 border-t border-azu-border">
-                                    <span class="text-[8px] text-azu-subText bg-azu-bg px-1.5 py-0.5 rounded border border-azu-border">未着手</span>
-                                    <span class="text-[8px] text-azu-subText flex items-center gap-0.5 opacity-70">🔒 11/01</span>
-                                </div>
-                            </div>
-                        </article>
 
-                        <!-- Placeholder -->
-                        <div class="border-2 border-dashed border-azu-border rounded-xl flex flex-col items-center justify-center p-4 text-azu-subText/50 hover:bg-white/50 transition h-full min-h-[140px] gap-1">
-                            <span class="text-base">✨</span>
-                            <p class="text-[8px]">Coming Soon...</p>
-                        </div>
-                    </div>
-                </section>
+  <!-- =====================================================
+    📚 講義一覧
+    👉 講義カード増やすだけでOK
+  ===================================================== -->
+  <section>
+    <h3 class="font-bold mb-4">講義スライド</h3>
 
-                <!-- Block 4: Practice Work -->
-                <section id="works" class="section-block">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 gap-4">
-                        <div>
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="text-xl">📝</span>
-                                <h2 class="font-serif text-lg md:text-xl text-azu-text font-bold">実践ワーク</h2>
-                            </div>
-                            <p class="text-[10px] text-azu-subText">書くことで心を整理し、変化を加速させます。</p>
-                        </div>
-                    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
 
-                    <!-- Responsive Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4">
-                         <!-- Workbook Card (Slim) -->
-                         <article class="course-card group flex flex-col xs:flex-row h-auto xs:h-28">
-                            <div class="xs:w-32 bg-azu-bg relative overflow-hidden shrink-0 h-24 xs:h-auto">
-                                <div class="absolute inset-0 flex items-center justify-center text-3xl opacity-50 group-hover:scale-110 transition-transform duration-700">🕊️</div>
-                                <div class="absolute top-2 left-2 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-[8px] font-bold text-azu-subText tracking-widest shadow-sm">WORKBOOK</div>
-                            </div>
-                            <div class="p-3 flex-1 flex flex-col justify-between">
-                                <div>
-                                    <h3 class="font-serif text-sm font-bold text-azu-text mb-1 group-hover:text-azu-accentPink transition-colors">実践ワークシート集</h3>
-                                    <p class="text-[10px] text-azu-subText line-clamp-2 leading-relaxed">日常で使える書き込み式ワークシートのダウンロードはこちら。</p>
-                                </div>
-                                <div class="flex items-center justify-between pt-1 border-t border-azu-border mt-1">
-                                    <span class="text-[9px] text-azu-gold font-bold bg-azu-pink/50 px-2 py-0.5 rounded">随時更新</span>
-                                    <a href="#" class="text-[10px] text-azu-text hover:text-azu-gold transition flex items-center gap-1 font-medium">
-                                        開く <span class="text-[8px]">▶</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </article>
+      <!-- ▼ 1講義カード -->
+      <a href="#" class="bg-white p-6 rounded-xl shadow text-center hover:bg-azu-pink">
+        STEP1<br>安心感の土台
+      </a>
 
-                        <!-- Practice Card (Slim) -->
-                        <article class="course-card group flex flex-col xs:flex-row h-auto xs:h-28">
-                            <div class="xs:w-32 bg-azu-pink/20 relative overflow-hidden shrink-0 h-24 xs:h-auto">
-                                <div class="absolute inset-0 flex items-center justify-center text-3xl opacity-50 group-hover:scale-110 transition-transform duration-700">✍️</div>
-                                <div class="absolute top-2 left-2 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-[8px] font-bold text-azu-subText tracking-widest shadow-sm">PRACTICE</div>
-                            </div>
-                            <div class="p-3 flex-1 flex flex-col justify-between">
-                                <div>
-                                    <h3 class="font-serif text-sm font-bold text-azu-text mb-1 group-hover:text-azu-accentPink transition-colors">3分間・感情ジャーナリング</h3>
-                                    <p class="text-[10px] text-azu-subText line-clamp-2 leading-relaxed">モヤモヤした時にすぐ使える、書き出しワークの実践ページ。</p>
-                                </div>
-                                <div class="flex items-center justify-between pt-1 border-t border-azu-border mt-1">
-                                    <span class="text-[9px] text-azu-subText bg-azu-bg px-2 py-0.5 rounded border border-azu-border">実践中</span>
-                                    <a href="#" class="text-[10px] text-azu-text hover:text-azu-gold transition flex items-center gap-1 font-medium">
-                                        書く <span class="text-[8px]">▶</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                </section>
+      <!-- 追加したい時は ↑ をコピペ -->
 
-                <!-- Block 5: Audio Guide -->
-                <section id="audio" class="section-block">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 gap-4">
-                        <div>
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="text-xl">🎧</span>
-                                <h2 class="font-serif text-lg md:text-xl text-azu-text font-bold">音声ガイド</h2>
-                            </div>
-                            <p class="text-[10px] text-azu-subText">いつでもどこでも、安心感を取り戻すための音声です。</p>
-                        </div>
-                    </div>
+    </div>
+  </section>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Audio Guide Card -->
-                        <article class="course-card group flex flex-col xs:flex-row h-auto xs:h-28">
-                            <div class="xs:w-32 bg-azu-blue/20 relative overflow-hidden shrink-0 h-24 xs:h-auto">
-                                <div class="absolute inset-0 flex items-center justify-center text-3xl opacity-50 group-hover:scale-110 transition-transform duration-700">🎶</div>
-                                <div class="absolute top-2 left-2 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-[8px] font-bold text-azu-subText tracking-widest shadow-sm">AUDIO</div>
-                            </div>
-                            <div class="p-3 flex-1 flex flex-col justify-between">
-                                <div>
-                                    <h3 class="font-serif text-sm font-bold text-azu-text mb-1 group-hover:text-azu-accentPink transition-colors">安心感を育てる音声ガイド</h3>
-                                    <p class="text-[10px] text-azu-subText line-clamp-2 leading-relaxed">朝の瞑想や、不安になった時に聞く誘導瞑想音声です。</p>
-                                </div>
-                                <div class="flex items-center justify-between pt-1 border-t border-azu-border mt-1">
-                                    <span class="text-[9px] text-azu-gold font-bold bg-azu-blue/30 px-2 py-0.5 rounded">いつでも視聴可</span>
-                                    <a href="#" class="text-[10px] text-azu-text hover:text-azu-gold transition flex items-center gap-1 font-medium">
-                                        再生 <span class="text-[8px]">▶</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                </section>
 
-                <!-- Block 6: Update History -->
-                <section class="section-block">
-                    <div class="flex items-center gap-2 mb-6">
-                        <h2 class="font-serif text-lg text-azu-text font-bold">更新履歴</h2>
-                        <div class="h-[1px] flex-1 bg-azu-border"></div>
-                    </div>
-                    
-                    <div class="space-y-2">
-                        <a href="#" class="block p-4 hover:bg-azu-bg rounded-xl transition flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 group border border-transparent hover:border-azu-border">
-                            <span class="text-[10px] text-azu-subText bg-azu-border/50 px-2 py-1 rounded inline-block w-fit">2023.10.20</span>
-                            <div class="flex-1">
-                                <p class="text-sm text-azu-text font-medium group-hover:text-azu-accentPink transition-colors">11月のグループセッションの日程が決まりました</p>
-                            </div>
-                            <span class="text-[10px] text-azu-gold border border-azu-gold/30 px-2 py-0.5 rounded-full">お知らせ</span>
-                        </a>
-                        <div class="h-[1px] bg-azu-border mx-2"></div>
-                        <a href="#" class="block p-4 hover:bg-azu-bg rounded-xl transition flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 group border border-transparent hover:border-azu-border">
-                            <span class="text-[10px] text-azu-subText bg-azu-border/50 px-2 py-1 rounded inline-block w-fit">2023.10.15</span>
-                            <div class="flex-1">
-                                <p class="text-sm text-azu-text font-medium group-hover:text-azu-accentPink transition-colors">「感情デトックス」のワークシートを修正しました</p>
-                            </div>
-                            <span class="text-[10px] text-azu-accentBlue border border-azu-accentBlue/30 px-2 py-0.5 rounded-full">教材</span>
-                        </a>
-                    </div>
-                    
-                    <div class="text-center mt-6">
-                         <a href="#" class="text-xs text-azu-subText hover:text-azu-gold transition border-b border-azu-subText/30 hover:border-azu-gold pb-0.5">すべてのお知らせを見る</a>
-                    </div>
-                </section>
 
-            </div>
-        </div>
-    </main>
+</main>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-azu-border mt-auto">
-        <div class="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="flex items-center gap-3 opacity-60">
-                <img src="image_fef63c.jpg" alt="Footer Logo" class="h-6 w-6 rounded-full grayscale">
-                <span class="font-serif text-xs tracking-widest text-azu-subText">AZU SELFING</span>
-            </div>
-            
-            <div class="flex gap-6 text-[10px] text-azu-subText">
-                <a href="#" class="hover:text-azu-text transition">利用規約</a>
-                <a href="#" class="hover:text-azu-text transition">プライバシーポリシー</a>
-                <a href="#" class="hover:text-azu-text transition">お問い合わせ</a>
-            </div>
-            
-            <p class="text-[9px] text-azu-subText/50 tracking-widest">© AZU SELFING PROGRAM.</p>
-        </div>
-    </footer>
 
-  <!-- パスワード追加-->
 
+
+<!-- =====================================================
+  🟣 フッター
+===================================================== -->
+<footer class="text-center text-xs py-6 text-gray-400">
+  © AZU SELFING
+</footer>
+
+
+
+
+<!-- =====================================================
+  🔐 パスワード制御スクリプト
+  👉 パスワード変更はここだけ
+===================================================== -->
 <script>
-const correctPassword = "azu123";
 
-// 🔐 ページ読み込み時に必ずモーダル表示
-window.addEventListener("load", () => {
+  // ★ パスワードここ変更
+  const correctPassword = "azu123";
 
-  const modal = document.getElementById("loginModal");
+  // 初回ロード処理
+  window.addEventListener("load", () => {
+    const modal = document.getElementById("loginModal");
 
-  if(sessionStorage.getItem("azu_login") === "true"){
-    modal.style.display = "none";
-  } else {
-    modal.style.display = "flex"; // ← ★これ超重要！！
+    // ログイン済みなら非表示
+    if (sessionStorage.getItem("azu_login") === "true") {
+      modal.style.display = "none";
+    } else {
+      modal.style.display = "flex";
+    }
+  });
+
+  // パスワードチェック
+  function checkPassword() {
+    const input = document.getElementById("passwordInput").value;
+    const modal = document.getElementById("loginModal");
+    const error = document.getElementById("errorMsg");
+
+    if (input === correctPassword) {
+      sessionStorage.setItem("azu_login", "true");
+      modal.style.display = "none";
+    } else {
+      error.classList.remove("hidden");
+    }
   }
-});
 
-function checkPassword(){
-  const input = document.getElementById("passwordInput").value;
-  const modal = document.getElementById("loginModal");
-  const error = document.getElementById("errorMsg");
-
-  if(input === correctPassword){
-    sessionStorage.setItem("azu_login","true");
-    modal.style.display = "none";
-  } else {
-    error.classList.remove("hidden");
-  }
-}
 </script>
 
-
-  <!-- パスワード追加-->
 
 
 </body>
